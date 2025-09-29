@@ -9,9 +9,9 @@ endif
 $(VENV_BIN):
 	python -m venv .venv
 
-#.PHONY: deps
-#deps: $(VENV_BIN)
-#      ${VENV_BIN}/python -m pip install -e .[dev]
+.PHONY: deps
+deps: $(VENV_BIN)
+	${VENV_BIN}/python -m pip install -e .[dev]
 
 test: $(VENV_BIN)
 	pytest
