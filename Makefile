@@ -1,16 +1,29 @@
+ifeq ($(OS),Windows_NT)
+	VENV_BIN = .venv\Scripts
+else
+	VENV_BIN = .venv/bin
+endif
+
 .PHONY: test format lint typecheck run fix
 
-test:
+$(VENV_BIN):
+	python -m venv .venv
+
+#.PHONY: deps
+#deps: $(VENV_BIN)
+#      ${VENV_BIN}/python -m pip install -e .[dev]
+
+test: $(VENV_BIN)
 	pytest
 
-format:
+format: $(VENV_BIN)
 	ruff format .
 
-lint:
+lint: $(VENV_BIN)
 	ruff check . --fix
 
-typecheck:
+typecheck: $(VENV_BIN)
 	mypy src/
 
-run:
+run: $(VENV_BIN)
 	uvicorn src.main:app --reload
