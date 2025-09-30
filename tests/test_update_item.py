@@ -4,6 +4,7 @@ from main import app
 
 client = TestClient(app)
 
+
 def test_update_item():
     item_id = 1
     payload = {
@@ -16,4 +17,3 @@ def test_update_item():
     data: dict = response.json()
     assert data["item_id"] == item_id
     assert data["item"] == payload
-
