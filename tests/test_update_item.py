@@ -1,11 +1,11 @@
 from fastapi.testclient import TestClient
 
-from main import app
+from journal.main import app
 
 client = TestClient(app)
 
 
-def test_update_item():
+def test_update_item() -> None:
     item_id = 1
     payload = {
         "name": "Test Item",

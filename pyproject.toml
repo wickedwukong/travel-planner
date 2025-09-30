@@ -34,6 +34,14 @@ warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 
+[[tool.mypy.overrides]]
+module = ["httpx_gssapi",
+    "fastapi.testclient",
+    "fastapi",
+    "pydantic"]
+ignore_missing_imports = true
+
+
 [tool.ruff.lint]
 select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "COM", "S", "T", "DJ", "EM", "EXE", "FA", "ISC", "ICN", "G", "INP", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SLOT", "SIM", "TID", "TCH", "INT", "ARG", "PTH", "TD", "FIX", "ERA", "PD", "PGH", "PL", "TRY", "FLY", "NPY", "AIR", "PERF", "FURB", "LOG", "RUF"]
 ignore = ["E501", "S101", "FA102", "COM812", "PLR2004"]  # Ignore line length (handled by formatter) and assert usage in tests

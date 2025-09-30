@@ -14,16 +14,18 @@ deps: $(VENV_BIN)
 	${VENV_BIN}/python -m pip install -e .[dev]
 
 test: $(VENV_BIN)
-	pytest
+	pytest -vv tests/
 
 format: $(VENV_BIN)
-	ruff format .
+	${VENV_BIN}/ruff format .
 
 lint: $(VENV_BIN)
-	ruff check . --fix
+	${VENV_BIN}/ruff check . --fix
 
-typecheck: $(VENV_BIN)
-	mypy src/
+•PHONY: typecheck
+typecheck:
+	${VENV_BIN}/mypy ./src
 
+## run just.typechecker
 run: $(VENV_BIN)
 	uvicorn src.main:app --reload

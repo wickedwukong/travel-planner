@@ -1,10 +1,10 @@
 from fastapi.testclient import TestClient
 
-from hello_world import hello_world
-from main import app
+from journal.hello_world import hello_world
+from journal.main import app
 
 client = TestClient(app)
 
 
-def test_hello_world():
+def test_hello_world() -> None:
     assert hello_world() == "Hello, World!"

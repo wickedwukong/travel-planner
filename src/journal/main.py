@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from journal import router as journal_router
+from journal.journal import router as journal_router
 
 app = FastAPI()
 app.include_router(journal_router)
