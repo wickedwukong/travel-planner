@@ -11,7 +11,7 @@ requires-python = ">=3.8"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest", "ruff", "mypy"]
+dev = ["pytest", "ruff", "mypy", "pytest-anyio"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -31,7 +31,8 @@ src = ["src", "tests"]
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
-warn_unused_configs = truedisallow_untyped_defs = true
+warn_unused_configs = true
+disallow_untyped_defs = true
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "COM", "S", "T", "DJ", "EM", "EXE", "FA", "ISC", "ICN", "G", "INP", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SLOT", "SIM", "TID", "TCH", "INT", "ARG", "PTH", "TD", "FIX", "ERA", "PD", "PGH", "PL", "TRY", "FLY", "NPY", "AIR", "PERF", "FURB", "LOG", "RUF"]

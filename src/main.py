@@ -1,3 +1,5 @@
+from datetime import datetime
+import uuid
 from typing import Any
 
 from fastapi import FastAPI
@@ -26,3 +28,4 @@ async def read_item(item_id: int, q: str | None = None) -> dict:
 @app.put("/items/{item_id}")
 async def update_item(item_id: int, item: Item) -> dict[str, Any]:
     return {"item_id": item_id, "item": item}
+
