@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 
-from journal.main import app
+from journal.main import prod_app
 
-client = TestClient(app)
+client = TestClient(prod_app())
 
 
 def test_update_item() -> None:

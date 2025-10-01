@@ -5,8 +5,6 @@ from pydantic import BaseModel
 
 from journal.journal import router as journal_router
 
-app = FastAPI()
-app.include_router(journal_router)
 
 
 class Item(BaseModel):
@@ -15,16 +13,27 @@ class Item(BaseModel):
     is_offer: bool | None = None
 
 
-@app.get("/")
-async def home() -> dict[str, str]:
-    return {"message": "Hello, World!"}
+
+def factory() -> FastAPI:
+    app = FastAPI()
+    app.include_router(journal_router)
+
+    @app.get("/")
+    async def home() -> dict[str, str]:
+        return {"message": "Hello, World!"}
 
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str | None = None) -> dict:
-    return {"item_id": item_id, "q": q}
+    @app.get("/items/{item_id}")
+    async def read_item(item_id: int, q: str | None = None) -> dict:
+        return {"item_id": item_id, "q": q}
 
 
-@app.put("/items/{item_id}")
-async def update_item(item_id: int, item: Item) -> dict[str, Any]:
-    return {"item_id": item_id, "item": item}
+    @app.put("/items/{item_id}")
+    async def update_item(item_id: int, item: Item) -> dict[str, Any]:
+        return {"item_id": item_id, "item": item}
+
+    return app
+
+
+def prod_app() -> FastAPI:
+    return factory()

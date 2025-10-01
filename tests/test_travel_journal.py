@@ -2,12 +2,12 @@ import httpx
 import pytest
 from httpx import ASGITransport
 
-from journal.main import app
+from journal.main import prod_app
 
 @pytest.mark.asyncio
 async def test_create_journal_entry():
     async with httpx.AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
+        transport=ASGITransport(app=prod_app()), base_url="http://test"
     ) as client:
         response = await client.post(
             "/journal/entries",
@@ -26,7 +26,7 @@ async def test_create_journal_entry():
 @pytest.mark.asyncio
 async def test_find_journal_entry_by_id():
     async with httpx.AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
+        transport=ASGITransport(app=prod_app()), base_url="http://test"
     ) as client:
         create_response = await client.post(
             "/journal/entries",
