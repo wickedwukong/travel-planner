@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Protocol
 
-from journal.journal import JournalEntryInput, JournalEntry
+from journal.models import JournalEntryInput, JournalEntry
 
 
 class JournalRepository(Protocol):
@@ -23,6 +23,7 @@ class DBJournalRepository(JournalRepository):
             "INSERT INTO journal_entries (id, location, note, created_at) VALUES (?, ?, ?, ?)",
             (str(id), entry.location, entry.note, created_at.isoformat()),
         )
+        self.conn.commit()
 
         return JournalEntry(
             id=id,

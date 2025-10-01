@@ -28,4 +28,5 @@ typecheck:
 
 ## run just.typechecker
 run: $(VENV_BIN)
+	${VENV_BIN}/python src/journal/repository/migrate_db.py
 	${VENV_BIN}/uvicorn journal.main:app --reload
