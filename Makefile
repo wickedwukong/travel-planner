@@ -28,4 +28,4 @@ typecheck:
 
 ## run just.typechecker
 run: $(VENV_BIN)
-	uvicorn src.main:app --reload
+	${VENV_BIN}/uvicorn journal.main:app --reload
