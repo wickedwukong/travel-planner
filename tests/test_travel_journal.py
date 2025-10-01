@@ -4,6 +4,7 @@ from httpx import ASGITransport
 
 from journal.main import prod_app
 
+
 @pytest.mark.asyncio
 async def test_create_journal_entry():
     async with httpx.AsyncClient(
@@ -22,6 +23,7 @@ async def test_create_journal_entry():
         assert data.get("weather") is None
         assert data.get("created_at") is not None
         assert data.get("updated_at") is None
+
 
 @pytest.mark.asyncio
 async def test_find_journal_entry_by_id():

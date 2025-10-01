@@ -9,9 +9,6 @@ from journal.repository.journal_repository import DBJournalRepository
 from journal.repository.migrate_db import DB_PATH
 
 
-router = APIRouter()
-
-
 def get_db_journal_repository() -> Generator[DBJournalRepository, None, None]:
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     try:
@@ -20,21 +17,25 @@ def get_db_journal_repository() -> Generator[DBJournalRepository, None, None]:
         conn.close()
 
 
-@router.post("/journal/entries", status_code=201)
-async def create_travel_journal_entry(
-    entry: JournalEntryInput,
-    db_journal_repository: DBJournalRepository = Depends(get_db_journal_repository),
-) -> JournalEntry:
-    saved_entry = db_journal_repository.save(entry)
-    return saved_entry
+def journal_router() -> APIRouter:
+    router = APIRouter()
 
+    @router.post("/journal/entries", status_code=201)
+    async def create_travel_journal_entry(
+        entry: JournalEntryInput,
+        db_journal_repository: DBJournalRepository = Depends(get_db_journal_repository),
+    ) -> JournalEntry:
+        saved_entry = db_journal_repository.save(entry)
+        return saved_entry
 
-@router.get("/journal/entries/{entry_id}", status_code=200)
-async def find_journal_entry_by_id(
-    entry_id: str,
-    db_journal_repository: DBJournalRepository = Depends(get_db_journal_repository),
-) -> JournalEntry | None:
-    entry = db_journal_repository.find_by_id(uuid.UUID(entry_id))
-    if entry is None:
-        raise HTTPException(status_code=404, detail="Journal entry not found")
-    return entry
+    @router.get("/journal/entries/{entry_id}", status_code=200)
+    async def find_journal_entry_by_id(
+        entry_id: str,
+        db_journal_repository: DBJournalRepository = Depends(get_db_journal_repository),
+    ) -> JournalEntry | None:
+        entry = db_journal_repository.find_by_id(uuid.UUID(entry_id))
+        if entry is None:
+            raise HTTPException(status_code=404, detail="Journal entry not found")
+        return entry
+
+    return router
