@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class Weather(BaseModel):
+    city: str
     description: str
     temperature: float
 
