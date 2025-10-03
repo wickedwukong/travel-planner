@@ -1,0 +1,15 @@
+### GET request to example server
+GET http://127.0.0.1:8000/
+
+### POST request to create a new journal entry
+POST http://127.0.0.1:8000/journal/entries
+Content-Type: application/json
+
+{"location": "Paris", "note": "Visited the Louvre!"}
+
+> {%
+    client.global.set("entry_id", response.body.id)
+%}
+
+### GET request to retrieve an entry by ID
+GET http://127.0.0.1:8000/journal/entries/{{entry_id}}
