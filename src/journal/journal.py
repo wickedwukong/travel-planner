@@ -17,7 +17,7 @@ def get_db_journal_repository() -> Generator[DBJournalRepository, None, None]:
         conn.close()
 
 
-def journal_router() -> APIRouter:
+def journal_router(journal_repository: JournalEntry) -> APIRouter:
     router = APIRouter()
 
     @router.post("/journal/entries", status_code=201)

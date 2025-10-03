@@ -1,9 +1,14 @@
 from typing import Any
+from datetime import datetime
 
 from fastapi import FastAPI
+from journal.repository.journal_repository import DBJournalRepository
 from pydantic import BaseModel
 
 from journal.journal import journal_router
+from journal.repository.journal_repository import JournalRepository
+import sqlite3
+from journal.repository.migrate_db import DB_PATH
 
 
 class Item(BaseModel):
@@ -12,9 +17,9 @@ class Item(BaseModel):
     is_offer: bool | None = None
 
 
-def factory() -> FastAPI:
+def factory(journal_repository: JournalRepository) -> FastAPI:
     app = FastAPI()
-    app.include_router(journal_router())
+    app.include_router(journal_router(journal_repository))
 
     @app.get("/")
     async def home() -> dict[str, str]:
@@ -32,4 +37,5 @@ def factory() -> FastAPI:
 
 
 def prod_app() -> FastAPI:
-    return factory()
+    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+    return factory(DBJournalRepository(conn))
