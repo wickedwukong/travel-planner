@@ -49,3 +49,5 @@ Thumbs.db
 
 # Ruff
 .ruff_cache/
+.direnv/
+.envrc
