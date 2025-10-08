@@ -19,6 +19,8 @@ lint:
 typecheck:
 	mypy ./src
 
+migrate_db:
+	PYTHONPATH=src python -m journal.repository.migrate_db
 ## run just.typechecker
 run:
 	PYTHONPATH=src python -m journal.repository.migrate_db
