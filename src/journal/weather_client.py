@@ -1,6 +1,7 @@
 from journal.models import Weather
 import httpx
 
+
 class WeatherAPIClient:
     def __init__(
         self, api_key: str, base_url: str, http_client: httpx.AsyncClient

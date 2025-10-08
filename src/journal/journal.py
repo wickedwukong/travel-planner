@@ -1,18 +1,22 @@
 import uuid
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 
 from .models import JournalEntryInput, JournalEntry
 from .repository.journal_repository import JournalRepository
+from .weather_client import WeatherAPIClient
 
-
-def journal_router(journal_repository: JournalRepository) -> APIRouter:
+def journal_router(
+    journal_repository: JournalRepository, client: WeatherAPIClient
+) -> APIRouter:
     router = APIRouter()
 
     @router.post("/journal/entries", status_code=201)
     async def create_travel_journal_entry(
         entry: JournalEntryInput,
     ) -> JournalEntry:
+        weather = await client.weather(entry.location)
         saved_entry = journal_repository.save(entry)
         return saved_entry
 
@@ -24,5 +28,23 @@ def journal_router(journal_repository: JournalRepository) -> APIRouter:
         if entry is None:
             raise HTTPException(status_code=404, detail="Journal entry not found")
         return entry
+
+    @router.get("/journal/entries", status_code=200, response_model=None)
+    async def all_journal_entries():
+        def entry_stream():
+            yield "["
+            first = True
+            for entry in journal_repository.all_entries():
+                if not first:
+                    yield ","
+                else:
+                    first = False
+
+                yield entry.model_dump_json()
+
+            yield "]"
+
+
+        return StreamingResponse(entry_stream(), media_type="application/json")
 
     return router

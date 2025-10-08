@@ -12,6 +12,7 @@ from .repository.migrate_db import DB_PATH
 from .weather_client import WeatherAPIClient
 import os
 
+
 class Item(BaseModel):
     name: str
     price: float
@@ -20,7 +21,7 @@ class Item(BaseModel):
 
 def factory(journal_repository: JournalRepository, client: WeatherAPIClient) -> FastAPI:
     app = FastAPI()
-    app.include_router(journal_router(journal_repository))
+    app.include_router(journal_router(journal_repository, client))
 
     @app.get("/")
     async def home() -> dict[str, str]:
@@ -51,9 +52,8 @@ def prod_app() -> FastAPI:
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     weather_api_key: str = os.environ["WEATHER_API_KEY"]
     weather_api_client: WeatherAPIClient = WeatherAPIClient(
-            api_key=weather_api_key,
-            base_url="https://api.weatherapi.com",
-            http_client=httpx.AsyncClient()
-        )
+        api_key=weather_api_key,
+        base_url="https://api.weatherapi.com",
+        http_client=httpx.AsyncClient(),
+    )
     return factory(DBJournalRepository(conn), weather_api_client)
-
