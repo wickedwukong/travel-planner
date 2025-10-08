@@ -20,7 +20,7 @@ async def test_create_journal_entry():
         assert data["location"] == "Paris"
         assert data["note"] == "Visited the Louvre!"
         assert data.get("id") is not None
-        assert data.get("weather") is None
+        assert data.get("weather") is not None
         assert data.get("created_at") is not None
         assert data.get("updated_at") is None
 

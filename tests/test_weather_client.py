@@ -17,6 +17,5 @@ async def test_weather_client() -> None:
         )
         weather = await weather_api_client.weather("London")
 
-    assert weather.city == "London"
     assert weather.temperature is not None
     assert weather.description is not None

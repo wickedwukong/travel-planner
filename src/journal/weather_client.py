@@ -18,7 +18,6 @@ class WeatherAPIClient:
         weather_json = response.json()
 
         return Weather(
-            city=weather_json["location"]["name"],
             description=weather_json["current"]["condition"]["text"],
             temperature=weather_json["current"]["temp_c"],
         )

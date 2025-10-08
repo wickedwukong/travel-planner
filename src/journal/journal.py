@@ -17,6 +17,10 @@ def journal_router(
         entry: JournalEntryInput,
     ) -> JournalEntry:
         weather = await client.weather(entry.location)
+        entry = JournalEntry(
+            id=uuid.uuid4(),
+            location=entry.location, note=entry.note, weather=weather
+        )
         saved_entry = journal_repository.save(entry)
         return saved_entry
 
