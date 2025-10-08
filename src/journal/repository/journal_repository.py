@@ -9,6 +9,7 @@ from journal.models import JournalEntryInput, JournalEntry
 class JournalRepository(Protocol):
     def save(self, entry: JournalEntryInput) -> JournalEntry: ...
     def find_by_id(self, entry_id: uuid.UUID) -> JournalEntry | None: ...
+    def close(self) -> None: ...
 
 
 class DBJournalRepository(JournalRepository):
@@ -52,6 +53,8 @@ class DBJournalRepository(JournalRepository):
             weather=None,
             updated_at=None,
         )
+    def close(self) -> None:
+        self.conn.close()
 
     def __enter__(self):
         return self
