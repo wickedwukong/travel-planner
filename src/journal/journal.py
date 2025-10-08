@@ -2,8 +2,8 @@ import uuid
 
 from fastapi import APIRouter, HTTPException
 
-from journal.models import JournalEntryInput, JournalEntry
-from journal.repository.journal_repository import JournalRepository
+from .models import JournalEntryInput, JournalEntry
+from .repository.journal_repository import JournalRepository
 
 
 def journal_router(journal_repository: JournalRepository) -> APIRouter:

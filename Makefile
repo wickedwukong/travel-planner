@@ -21,5 +21,5 @@ typecheck:
 
 ## run just.typechecker
 run:
-	python src/journal/repository/migrate_db.py
-	uvicorn journal.main:prod_app --reload --factory
+	PYTHONPATH=src python -m journal.repository.migrate_db
+	PYTHONPATH=src uvicorn journal.main:prod_app --reload --factory
