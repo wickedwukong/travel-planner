@@ -27,7 +27,11 @@ description = "Format code with ruff"
 run = "ruff format ."
 
 [tasks.lint]
-description = "Lint and fix code with ruff"
+description = "Lint code with ruff (check only)"
+run = "ruff check ."
+
+[tasks.lint-fix]
+description = "Lint and auto-fix code with ruff"
 run = "ruff check . --fix"
 
 [tasks.typecheck]
