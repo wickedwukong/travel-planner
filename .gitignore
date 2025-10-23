@@ -29,6 +29,10 @@ env/
 ENV/
 env.bak/
 venv.bak/
+.venv/
+
+# Environment variables (secrets!)
+.env
 
 # Testing
 .pytest_cache/
