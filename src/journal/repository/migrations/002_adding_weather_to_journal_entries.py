@@ -4,10 +4,6 @@
 from yoyo import step
 
 steps = [
-    step(
-        "ALTER TABLE journal_entries ADD COLUMN temperature REAL"
-    ),
-    step(
-        "ALTER TABLE journal_entries ADD COLUMN description TEXT"
-        )
+    step("ALTER TABLE journal_entries ADD COLUMN temperature REAL"),
+    step("ALTER TABLE journal_entries ADD COLUMN description TEXT"),
 ]

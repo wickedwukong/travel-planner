@@ -2,7 +2,7 @@ import os
 import sqlite3
 import uuid
 
-from journal.models import Weather, JournalEntry
+from journal.models import JournalEntry, Weather
 from journal.repository.db_migrator import apply_migrations
 from journal.repository.journal_repository import DBJournalRepository
 
@@ -28,7 +28,10 @@ def test_save_journal_entry():
         entry = repo.save(
             JournalEntry(
                 id=uuid.uuid4(),
-                location="Test Location", note="Test entry", weather=Weather(temperature=25.0, description="Sunny"))
+                location="Test Location",
+                note="Test entry",
+                weather=Weather(temperature=25.0, description="Sunny"),
+            )
         )
 
     assert entry.id is not None
@@ -45,7 +48,10 @@ def test_find_journal_entry_by_id():
         entry = repo.save(
             JournalEntry(
                 id=uuid.uuid4(),
-                location="Test Location", note="Test entry", weather=Weather(temperature=20.0, description="Cloudy"))
+                location="Test Location",
+                note="Test entry",
+                weather=Weather(temperature=20.0, description="Cloudy"),
+            )
         )
         saved_entry = repo.find_by_id(entry.id)
 
@@ -58,13 +64,19 @@ def test_find_all_journal_entries():
         entry1 = repo.save(
             JournalEntry(
                 id=uuid.uuid4(),
-                location="Test Location1", note="Test entry1", weather=Weather(temperature=22.0, description="Partly Cloudy"))
+                location="Test Location1",
+                note="Test entry1",
+                weather=Weather(temperature=22.0, description="Partly Cloudy"),
+            )
         )
 
         entry2 = repo.save(
             JournalEntry(
                 id=uuid.uuid4(),
-                location="Test Location2", note="Test entry2", weather=Weather(temperature=30.0, description="Sunny"))
+                location="Test Location2",
+                note="Test entry2",
+                weather=Weather(temperature=30.0, description="Sunny"),
+            )
         )
 
         saved_entries = repo.all_entries()
@@ -75,13 +87,23 @@ def test_find_all_journal_entries():
 def test_remove_all_journal_entries():
     conn = sqlite3.connect(TEST_DB_PATH)
     with DBJournalRepository(conn) as repo:
-        repo.save(JournalEntry(
-            id=uuid.uuid4(),
-            location="Test Location1", note="Test entry1", weather=Weather(temperature=22.0, description="Partly Cloudy")))
+        repo.save(
+            JournalEntry(
+                id=uuid.uuid4(),
+                location="Test Location1",
+                note="Test entry1",
+                weather=Weather(temperature=22.0, description="Partly Cloudy"),
+            )
+        )
 
-        repo.save(JournalEntry(
-            id=uuid.uuid4(),
-            location="Test Location2", note="Test entry2", weather=Weather(temperature=30.0, description="Sunny")))
+        repo.save(
+            JournalEntry(
+                id=uuid.uuid4(),
+                location="Test Location2",
+                note="Test entry2",
+                weather=Weather(temperature=30.0, description="Sunny"),
+            )
+        )
 
         repo.remove_all()
         saved_entries = repo.all_entries()

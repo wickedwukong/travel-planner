@@ -1,6 +1,5 @@
 from .db_migrator import apply_migrations
 
-
 DB_PATH = "journal.db"
 import os
 

@@ -1,5 +1,6 @@
-from journal.models import Weather
 import httpx
+
+from journal.models import Weather
 
 
 class WeatherAPIClient:

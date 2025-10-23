@@ -3,9 +3,10 @@ import uuid
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 
-from .models import JournalEntryInput, JournalEntry
+from .models import JournalEntry, JournalEntryInput
 from .repository.journal_repository import JournalRepository
 from .weather_client import WeatherAPIClient
+
 
 def journal_router(
     journal_repository: JournalRepository, client: WeatherAPIClient
@@ -18,8 +19,7 @@ def journal_router(
     ) -> JournalEntry:
         weather = await client.weather(entry.location)
         entry = JournalEntry(
-            id=uuid.uuid4(),
-            location=entry.location, note=entry.note, weather=weather
+            id=uuid.uuid4(), location=entry.location, note=entry.note, weather=weather
         )
         saved_entry = journal_repository.save(entry)
         return saved_entry
@@ -47,7 +47,6 @@ def journal_router(
                 yield entry.model_dump_json()
 
             yield "]"
-
 
         return StreamingResponse(entry_stream(), media_type="application/json")
 

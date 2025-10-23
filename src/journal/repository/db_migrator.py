@@ -1,10 +1,12 @@
-from yoyo import read_migrations, get_backend
+import logging
 import os
 from typing import Optional
-import logging
+
+from yoyo import get_backend, read_migrations
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("yoyo").setLevel(logging.DEBUG)
+
 
 def apply_migrations(db_url: str, migrations_dir: Optional[str] = None):
     if migrations_dir is None:
