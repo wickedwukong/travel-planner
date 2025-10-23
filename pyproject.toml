@@ -7,8 +7,14 @@ name = "travle-planner"
 version = "0.1.0"
 description = "Travel Planner"
 authors = [{name = "Your Name", email = "your.email@example.com"}]
-requires-python = ">=3.8"
-dependencies = []
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.117.1",
+    "httpx>=0.28.1",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.11.9",
+    "yoyo-migrations>=9.0.0",
+]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff", "mypy", "pytest-anyio"]
